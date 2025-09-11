@@ -1,5 +1,3 @@
-# TODO: リファクタリング
-
 import pytest
 from langchain_openai import OpenAIEmbeddings
 from chatbot.graph import (
