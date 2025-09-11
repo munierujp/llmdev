@@ -1,3 +1,5 @@
+# TODO: リファクタリング
+
 import pytest
 from flask import session
 from chatbot.app import app

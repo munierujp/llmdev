@@ -1,3 +1,5 @@
+# TODO: リファクタリング
+
 # VS Codeのデバッグ実行で `from chatbot.graph` でエラーを出さない対策
 import sys
 import os

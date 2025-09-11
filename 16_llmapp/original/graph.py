@@ -1,3 +1,5 @@
+# TODO: リファクタリング
+
 import os
 from dotenv import load_dotenv
 import tiktoken

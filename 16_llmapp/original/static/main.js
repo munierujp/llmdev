@@ -1,3 +1,5 @@
+// TODO: リファクタリング
+
 window.onload = function() {
   // チャットボックスを取得
   const chatBox = document.getElementById('chat-box');
