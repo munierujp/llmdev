@@ -1,21 +1,12 @@
-// TODO: リファクタリング
-
-window.onload = function() {
-  // チャットボックスを取得
-  const chatBox = document.getElementById('chat-box');
-  
-  // チャットボックスのスクロールを一番下に設定
-  chatBox.scrollTop = chatBox.scrollHeight;
-
-  // Ctrl + Enterでフォームを送信
-  const form = document.getElementById('chat-form');
-  const textarea = document.getElementById('user-input');
-
-  textarea.addEventListener('keydown', function(event) {
-      // Ctrl + Enterが押された場合
-      if (event.ctrlKey && event.key === 'Enter') {
-          event.preventDefault();  // デフォルトの動作（改行など）を防止
-          form.submit();  // フォームを送信
-      }
+window.addEventListener('load', () => {  
+  const chatBoxElement = document.getElementById('chat-box')
+  chatBoxElement.scrollTop = chatBoxElement.scrollHeight
+  const formElement = document.getElementById('chat-form')
+  const textareaElement = document.getElementById('user-input')
+  textareaElement.addEventListener('keydown', event => {
+    if (event.ctrlKey && event.key === 'Enter') {
+      event.preventDefault()
+      formElement.submit()
+    }
   });
-}
+})
