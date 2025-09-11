@@ -70,7 +70,8 @@ body {
 }
 
 /* ユーザーとボットのメッセージのスタイル */
-.user-message, .bot-message {
+.user-message,
+.bot-message {
   position: relative;
   padding: 10px;
   margin-bottom: 10px;
@@ -97,10 +98,12 @@ body {
 }
 
 /* 吹き出しの三角形を作成するスタイル */
-.user-message:after, .bot-message:after {
+.user-message:after,
+.bot-message:after {
   content: '';
   position: absolute;
-  width: 0; height: 0;
+  width: 0;
+  height: 0;
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
   border-top: 10px solid;
