@@ -1,5 +1,5 @@
 (() => {
-  window.addEventListener('load', () => {  
+  window.addEventListener('load', () => {
     const chatBoxElement = document.getElementById('chat-box')
     chatBoxElement.scrollTop = chatBoxElement.scrollHeight
     const formElement = document.getElementById('chat-form')
@@ -9,6 +9,6 @@
         event.preventDefault()
         formElement.submit()
       }
-    });
+    })
   })
 })()
