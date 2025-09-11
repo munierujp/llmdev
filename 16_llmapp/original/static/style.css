@@ -105,6 +105,7 @@ body {
   border: none;                     /* 境界線なし */
   border-radius: 5px;               /* 角を丸くする */
   cursor: pointer;                  /* マウスカーソルをポインターに設定 */
+  white-space: nowrap;               /* テキストの折り返しを防止 */
 }
 
 /* 送信ボタンのホバー時のスタイル */
