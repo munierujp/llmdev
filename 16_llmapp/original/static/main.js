@@ -161,6 +161,29 @@ function enhanceCodeBlocks(scope) {
     if (pre.querySelector('.copy-button')) return
     const code = pre.querySelector('code')
     if (!code) return
+    // 言語ラベル判定
+    try {
+      if (!pre.querySelector('.code-lang-badge') && code.className) {
+        const classes = code.className.split(/\s+/)
+        const langClass = classes.find(c => c.startsWith('language-'))
+        if (langClass) {
+          const raw = langClass.replace('language-','').toLowerCase()
+          const langMap = {
+            js: 'JavaScript', javascript: 'JavaScript', jsx: 'JSX', ts: 'TypeScript', typescript: 'TypeScript',
+            py: 'Python', python: 'Python', rb: 'Ruby', java: 'Java', c: 'C', cpp: 'C++', cs: 'C#', go: 'Go', rs: 'Rust',
+            php: 'PHP', swift: 'Swift', kotlin: 'Kotlin', scala: 'Scala', sh: 'Shell', bash: 'Bash', zsh: 'Zsh',
+            html: 'HTML', css: 'CSS', json: 'JSON', yaml: 'YAML', yml: 'YAML', sql: 'SQL', md: 'Markdown', markdown: 'Markdown'
+          }
+            
+          const label = langMap[raw] || raw.charAt(0).toUpperCase() + raw.slice(1)
+          const badge = document.createElement('span')
+          badge.className = 'code-lang-badge'
+          badge.textContent = label
+          pre.classList.add('has-lang-badge')
+          pre.appendChild(badge)
+        }
+      }
+    } catch (_) { /* noop */ }
     const btn = document.createElement('button')
     btn.type = 'button'
     btn.className = 'copy-button'
