@@ -133,6 +133,14 @@ body {
 .clear-button-header:hover {
   background-color: var(--border-color);
 }
+.clear-button-header:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background-color: transparent;
+}
+.clear-button-header:disabled:hover {
+  background-color: transparent;
+}
 
 /* メインコンテンツエリア */
 .main-content {

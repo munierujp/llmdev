@@ -5,6 +5,18 @@
     const chatFormElement = document.getElementById('chat-form')
     const userInputElement = document.getElementById('user-input')
     const submitButtonElement = document.getElementById('submit-button')
+    const clearButtonElement = document.querySelector('.clear-button-header')
+
+    // 削除ボタン有効化判定
+    const updateClearButtonState = () => {
+      if (!clearButtonElement) return
+      if (clearButtonElement.disabled) {
+        const hasAnyMessage = chatBoxElement.querySelector('.user-message, .bot-message') !== null
+        if (hasAnyMessage) {
+          clearButtonElement.disabled = false
+        }
+      }
+    }
 
     // 入力内容に応じて送信ボタンの活性/非活性を切り替え
     const updateSubmitButtonState = () => {
@@ -29,6 +41,7 @@
       messageElement.textContent = message
       chatBoxElement.appendChild(messageElement)
       scrollToLatestMessage()
+  updateClearButtonState()
     }
 
     /** ボットメッセージをチャットボックスに追加 */
@@ -47,9 +60,11 @@
         }
       } catch (e) { console.warn('highlight failed', e) }
       scrollToLatestMessage()
+  updateClearButtonState()
     }
     
-    scrollToLatestMessage()
+  scrollToLatestMessage()
+  updateClearButtonState()
     
 
     /** 送信処理 */

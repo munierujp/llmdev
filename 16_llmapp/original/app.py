@@ -23,7 +23,8 @@ def index():
     except:
       messages = []
   
-  response = make_response(render_template('index.html', messages=messages))
+  clear_disabled = (len(messages) == 0)
+  response = make_response(render_template('index.html', messages=messages, clear_disabled=clear_disabled))
   return response
 
 @app.route('/send_message', methods=['POST'])
@@ -43,3 +44,7 @@ def clear():
 
 if __name__ == '__main__':
   app.run(debug=True)
+
+
+
+

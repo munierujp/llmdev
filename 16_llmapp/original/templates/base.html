@@ -16,9 +16,15 @@
   <header class="header">
     <h1>Chappy</h1>
     <form method="POST" action="/clear" class="clear-form">
+      {% if clear_disabled %}
+  <button type="submit" class="clear-button-header" title="履歴を削除" disabled>
+        <i class="fas fa-trash"></i>
+      </button>
+      {% else %}
       <button type="submit" class="clear-button-header" title="履歴を削除">
         <i class="fas fa-trash"></i>
       </button>
+      {% endif %}
     </form>
   </header>
   
