@@ -330,6 +330,40 @@ body {
   background: #c82333;
 }
 
+/* ユーザーメッセージ用コピー ボタン */
+/* ユーザーメッセージ下部ツールバー */
+.message-tools {
+  display: flex;
+  gap: 8px;
+  margin: 4px 0 10px;
+}
+.user-message-tools { justify-content: flex-end; }
+.user-message + .user-message-tools { margin-top: 4px; }
+
+.copy-msg-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px;
+  font-size: 12px;
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: 14px;
+  cursor: pointer;
+  line-height: 1;
+  transition: background-color .2s, color .2s, border-color .2s, transform .15s;
+}
+.copy-msg-button i { font-size: 12px; pointer-events: none; }
+.copy-msg-button:hover { background: var(--button-primary); color: #fff; border-color: var(--button-primary); }
+.copy-msg-button:active { transform: scale(.9); }
+.copy-msg-button.copied { background: #28a745; color: #fff; border-color: #28a745; }
+.copy-msg-button.error { background: #dc3545; color: #fff; border-color: #dc3545; }
+@media (prefers-color-scheme: dark) {
+  .copy-msg-button { background: var(--bg-tertiary); }
+  .copy-msg-button:hover { background: var(--button-primary); }
+}
+
 /* タイピングインジケータ */
 .typing-indicator {
   display: inline-flex;

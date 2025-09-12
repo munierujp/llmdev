@@ -48,8 +48,48 @@
       messageElement.className = 'user-message'
       messageElement.textContent = message
       chatBoxElement.appendChild(messageElement)
+      addCopyButtonToMessage(messageElement)
       scrollToLatestMessage()
       updateClearButtonState()
+    }
+
+    /** ユーザーメッセージにコピー ボタン追加（吹き出し外下部） */
+    const addCopyButtonToMessage = (msgEl) => {
+      if (!msgEl) return
+      // 直後に既にツールバーがあればスキップ
+      const next = msgEl.nextElementSibling
+      if (next && next.classList && next.classList.contains('user-message-tools')) return
+
+      const tools = document.createElement('div')
+      tools.className = 'message-tools user-message-tools'
+      const btn = document.createElement('button')
+      btn.type = 'button'
+      btn.className = 'copy-msg-button'
+      btn.setAttribute('aria-label', 'コピー')
+      btn.innerHTML = '<i class="fas fa-copy"></i>'
+      btn.addEventListener('click', async (e) => {
+        e.stopPropagation()
+        try {
+          await navigator.clipboard.writeText(msgEl.innerText)
+          btn.classList.remove('error')
+          btn.classList.add('copied')
+          btn.innerHTML = '<i class="fas fa-check"></i>'
+          setTimeout(() => {
+            btn.classList.remove('copied')
+            btn.innerHTML = '<i class="fas fa-copy"></i>'
+          }, 1400)
+        } catch (err) {
+          btn.classList.remove('copied')
+          btn.classList.add('error')
+          btn.innerHTML = '<i class="fas fa-exclamation"></i>'
+          setTimeout(() => {
+            btn.classList.remove('error')
+            btn.innerHTML = '<i class="fas fa-copy"></i>'
+          }, 1400)
+        }
+      })
+      tools.appendChild(btn)
+      msgEl.after(tools)
     }
 
     /** タイピングインジケータ表示 */
@@ -176,6 +216,8 @@
 
     // 既存メッセージ内コードブロックにもコピー機能付与
     document.querySelectorAll('.bot-message').forEach(m => enhanceCodeBlocks(m))
+  // 既存ユーザーメッセージにコピー追加
+  document.querySelectorAll('.user-message').forEach(m => addCopyButtonToMessage(m))
   })
 })()
 
