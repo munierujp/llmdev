@@ -9,6 +9,8 @@ from langchain_chroma import Chroma
 from langchain.tools.retriever import create_retriever_tool
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import HumanMessage, AIMessage
+import markdown as md
+import bleach
 from langgraph.graph import StateGraph
 from langgraph.graph.message import add_messages
 from langgraph.prebuilt import ToolNode, tools_condition
@@ -119,10 +121,53 @@ def get_messages_list(memory: MemorySaver, thread_id: str):
   messages = []
   memories = memory.get({"configurable": {"thread_id": thread_id}})['channel_values']['messages']
 
+  # Markdown -> HTML 変換設定
+  allowed_tags = bleach.sanitizer.ALLOWED_TAGS.union({
+    'p','pre','code','blockquote','hr','br','ul','ol','li','strong','em','h1','h2','h3','h4','h5','h6','table','thead','tbody','tr','th','td','a'
+  })
+  allowed_attrs = {
+    '*': ['class'],
+    'a': ['href','title','rel','target'],
+    'img': ['src','alt','title']
+  }
+
+  def extract_text(content) -> str:
+    # content が文字列ならそのまま
+    if isinstance(content, str):
+      return content
+    # list の場合 (langchain の構造化メッセージ想定)
+    if isinstance(content, list):
+      parts = []
+      for c in content:
+        if isinstance(c, str):
+          parts.append(c)
+        elif isinstance(c, dict):
+          # text / content / tool_output など汎用的に拾う
+          for key in ('text','content','output','tool_output'):  # 優先順
+            if key in c and isinstance(c[key], str):
+              parts.append(c[key])
+              break
+      return '\n'.join(parts)
+    # dict 単体
+    if isinstance(content, dict):
+      for key in ('text','content','output','tool_output'):
+        if key in content and isinstance(content[key], str):
+          return content[key]
+    return str(content)
+
+  def render_markdown(raw) -> str:
+    text = extract_text(raw)
+    html = md.markdown(
+      text,
+      extensions=['fenced_code', 'tables', 'toc', 'sane_lists']
+    )
+    clean = bleach.clean(html, tags=allowed_tags, attributes=allowed_attrs, strip=True)
+    return clean
+
   for message in memories:
     if isinstance(message, HumanMessage):
-      messages.append({'class': 'user-message', 'text': message.content.replace('\n', '<br>')})
-    elif isinstance(message, AIMessage) and message.content != "":
-      messages.append({'class': 'bot-message', 'text': message.content.replace('\n', '<br>')})
+      messages.append({'class': 'user-message', 'text': render_markdown(message.content)})
+    elif isinstance(message, AIMessage) and message.content:
+      messages.append({'class': 'bot-message', 'text': render_markdown(message.content)})
   
   return messages

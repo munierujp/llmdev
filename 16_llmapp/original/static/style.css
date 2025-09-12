@@ -198,6 +198,19 @@ body {
   text-align: left;
 }
 
+/* Markdown 表示調整 */
+.bot-message h1,.bot-message h2,.bot-message h3 { margin: 0.6em 0 0.4em; }
+.bot-message p { margin: 0.4em 0; }
+.bot-message pre { background: #272822; color:#f8f8f2; padding:10px; border-radius:6px; overflow:auto; }
+.bot-message code { background: rgba(0,0,0,0.1); padding:2px 4px; border-radius:4px; font-family: Menlo, monospace; font-size: 0.9em; }
+.bot-message pre code { background: none; padding:0; }
+.bot-message ul, .bot-message ol { padding-left: 1.4em; margin:0.4em 0; }
+.bot-message table { border-collapse: collapse; width: 100%; margin:0.6em 0; }
+.bot-message th, .bot-message td { border:1px solid var(--border-color); padding:4px 8px; text-align:left; }
+.bot-message blockquote { margin:0.6em 0; padding:0.4em 0.8em; border-left:4px solid var(--border-color); background: rgba(0,0,0,0.05); }
+.bot-message a { color: var(--button-primary); text-decoration: underline; }
+.bot-message a:hover { color: var(--button-primary-hover); }
+
 /* 吹き出しの三角形を作成するスタイル */
 .user-message:after,
 .bot-message:after {

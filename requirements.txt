@@ -18,3 +18,5 @@ langchain-community==0.3.7
 langchain-openai==0.2.8
 langchain-text-splitters==0.3.2
 langgraph==0.2.48
+markdown==3.6
+bleach==6.1.0
