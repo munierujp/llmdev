@@ -37,6 +37,14 @@
       messageElement.className = 'bot-message'
       messageElement.innerHTML = message
       chatBoxElement.appendChild(messageElement)
+      // 追加後にコードブロックへシンタックスハイライト適用
+      try {
+        if (window.hljs) {
+          messageElement.querySelectorAll('pre code').forEach(block => {
+            window.hljs.highlightElement(block)
+          })
+        }
+      } catch (e) { console.warn('highlight failed', e) }
       scrollToLatestMessage()
     }
     
