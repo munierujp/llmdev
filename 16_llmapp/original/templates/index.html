@@ -3,6 +3,15 @@
 {% block content %}
 <div class="chat-container">
   <div class="chat-box" id="chat-box">
+    <div id="welcome-message" class="welcome-message bot-message">
+      私はChappy（チャッピー）です。なんでもきいてくださいね。たとえば……
+      <ul>
+        <li>日本の首都は？</li>
+        <li>週末に東京駅周辺であるイベントを検索して</li>
+        <li>JavaScriptでFizzBuzzのコードを書いて</li>
+        <li>有給休暇の日数は？</li>
+      </ul>
+    </div>
     {% for message in messages %}
     <div class="{{ message.class }}">
       {{ message.text|safe }}
@@ -15,7 +24,7 @@
   <form method="POST" action="/send_message" id="chat-form">
     <div class="input-box">
       <div class="input-wrapper">
-        <textarea name="user_message" id="user-input" placeholder="メッセージを入力" required autofocus></textarea>
+  <textarea name="user_message" id="user-input" placeholder="メッセージを入力" aria-label="メッセージ入力" required></textarea>
         <button type="submit" id="submit-button" aria-label="送信">
           <i class="fas fa-paper-plane"></i>
         </button>
@@ -24,5 +33,5 @@
   </form>
 </div>
 
-<script src="{{ url_for('static', filename='main.js') }}"></script>
+<script defer src="{{ url_for('static', filename='main.js') }}"></script>
 {% endblock %}
