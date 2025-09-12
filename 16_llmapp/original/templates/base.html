@@ -13,7 +13,7 @@
   <header class="header">
     <h1>Chappy</h1>
     <form method="POST" action="/clear" class="clear-form">
-      <button type="submit" class="clear-button-header" title="履歴を消去">
+      <button type="submit" class="clear-button-header" title="履歴を削除">
         <i class="fas fa-trash"></i>
       </button>
     </form>
@@ -22,6 +22,19 @@
   <main class="main-content">
     {% block content %}{% endblock %}
   </main>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const clearForm = document.querySelector('.clear-form');
+      if (clearForm) {
+        clearForm.addEventListener('submit', (e) => {
+          const ok = window.confirm('メッセージの履歴を削除しますか？');
+            if (!ok) {
+              e.preventDefault();
+            }
+        });
+      }
+    });
+  </script>
 </body>
 
 </html>
