@@ -37,6 +37,7 @@
       messageElement.className = 'bot-message'
       messageElement.innerHTML = message
       chatBoxElement.appendChild(messageElement)
+  enhanceCodeBlocks(messageElement)
       // 追加後にコードブロックへシンタックスハイライト適用
       try {
         if (window.hljs) {
@@ -119,5 +120,38 @@
 
   // 入力変化でボタン状態を更新
   userInputElement.addEventListener('input', updateSubmitButtonState)
+
+  // 既存メッセージ内コードブロックにもコピー機能付与
+  document.querySelectorAll('.bot-message').forEach(m => enhanceCodeBlocks(m))
   })
 })()
+
+// コードブロック強化: コピー ボタン追加
+function enhanceCodeBlocks(scope) {
+  const pres = scope.querySelectorAll('pre')
+  pres.forEach(pre => {
+    if (pre.querySelector('.copy-button')) return
+    const code = pre.querySelector('code')
+    if (!code) return
+  const btn = document.createElement('button')
+  btn.type = 'button'
+  btn.className = 'copy-button'
+  btn.innerHTML = '<i class="fas fa-copy"></i>'
+    btn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(code.innerText)
+  btn.classList.remove('error')
+  btn.classList.add('copied')
+  btn.innerHTML = '<i class="fas fa-check"></i>'
+  setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = '<i class="fas fa-copy"></i>' }, 1400)
+      } catch (e) {
+        console.warn('copy failed', e)
+  btn.classList.remove('copied')
+  btn.classList.add('error')
+  btn.innerHTML = '<i class="fas fa-exclamation"></i>'
+  setTimeout(() => { btn.classList.remove('error'); btn.innerHTML = '<i class="fas fa-copy"></i>' }, 1200)
+      }
+    })
+    pre.appendChild(btn)
+  })
+}

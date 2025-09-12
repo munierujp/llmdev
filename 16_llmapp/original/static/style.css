@@ -204,6 +204,34 @@ body {
 .bot-message pre { background: var(--bg-secondary); padding:10px; border-radius:6px; overflow:auto; }
 .bot-message code { background: rgba(0,0,0,0.08); padding:2px 4px; border-radius:4px; font-family: Menlo, monospace; font-size: 0.9em; }
 .bot-message pre code { background: transparent; padding:0; }
+
+/* コードブロック用コピー ボタン */
+.bot-message pre { position: relative; }
+.copy-button {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: var(--button-primary);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  cursor: pointer;
+  opacity: 0.85;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color .2s, opacity .2s, transform .15s;
+}
+.copy-button i { font-size: 14px; pointer-events: none; }
+.copy-button:hover { opacity: 1; background: var(--button-primary-hover); }
+.copy-button:active { transform: scale(.92); }
+.copy-button.copied { background: #28a745; }
+.copy-button.copied:hover { background: #218838; }
+.copy-button.error { background: #dc3545; }
+.copy-button.error:hover { background: #c82333; }
 .bot-message ul, .bot-message ol { padding-left: 1.4em; margin:0.4em 0; }
 .bot-message table { border-collapse: collapse; width: 100%; margin:0.6em 0; }
 .bot-message th, .bot-message td { border:1px solid var(--border-color); padding:4px 8px; text-align:left; }
