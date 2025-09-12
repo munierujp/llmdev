@@ -7,6 +7,14 @@
     const submitButtonElement = document.getElementById('submit-button')
     const clearButtonElement = document.querySelector('.clear-button-header')
 
+    // 初回表示で入力欄へ自動フォーカス
+    if (userInputElement && !userInputElement.disabled) {
+      // レイアウト安定後に確実にフォーカスさせる
+      setTimeout(() => {
+        try { userInputElement.focus() } catch (_) { /* noop */ }
+      }, 0)
+    }
+
     // 削除ボタン有効化判定
     const updateClearButtonState = () => {
       if (!clearButtonElement) return
@@ -110,6 +118,8 @@
           // フォームを有効化
           userInputElement.disabled = false
           submitButtonElement.disabled = false
+          // 再度入力しやすいようにフォーカスを戻す
+          try { userInputElement.focus() } catch (_) {}
         })
         .catch(error => {
           console.error(error)
@@ -118,6 +128,7 @@
           userInputElement.value = userMessage
           userInputElement.disabled = false
           submitButtonElement.disabled = false
+          try { userInputElement.focus() } catch (_) {}
         })
     }
 

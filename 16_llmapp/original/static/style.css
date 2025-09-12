@@ -392,6 +392,13 @@ body {
   field-sizing: content;
 }
 
+/* フォーカス時の強調（青系） */
+.input-box textarea:focus {
+  border-color: var(--button-primary);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
 /* 入力エリア（textarea）のdisabled時のスタイル */
 .input-box textarea:disabled {
   background-color: var(--input-disabled-bg);
