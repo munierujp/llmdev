@@ -5,7 +5,6 @@
     const chatFormElement = document.getElementById('chat-form')
     const userInputElement = document.getElementById('user-input')
     const submitButtonElement = document.getElementById('submit-button')
-    const clearButtonElement = document.getElementById('clear-button')
 
     /** 最新のメッセージにスクロール */
     const scrollToLatestMessage = () => {
@@ -31,7 +30,7 @@
     }
     
     scrollToLatestMessage()
-
+    
 
     /** 送信処理 */
     const handleSubmit = () => {
@@ -42,7 +41,6 @@
       userInputElement.value = ''
       userInputElement.disabled = true
       submitButtonElement.disabled = true
-      clearButtonElement.disabled = true
       
       // メッセージを送信
       const formData = new FormData()
@@ -75,7 +73,6 @@
         // フォームを有効化
         userInputElement.disabled = false
         submitButtonElement.disabled = false
-        clearButtonElement.disabled = false
       })
       .catch(error => {
         console.error(error)
@@ -84,7 +81,6 @@
         userInputElement.value = userMessage
         userInputElement.disabled = false
         submitButtonElement.disabled = false
-        clearButtonElement.disabled = false
       })
     }
 

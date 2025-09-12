@@ -52,29 +52,122 @@ body {
   margin: 0;
   padding: 0;
   transition: background-color 0.3s ease, color 0.3s ease;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-/* メインコンテナのスタイル */
-.container {
-  max-width: 800px;
-  margin: 50px auto;
+/* 全体のコンテンツ幅制限 */
+.header,
+.main-content,
+.input-container {
+  max-width: 768px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+/* スマートフォンサイズでは幅制限を解除 */
+@media (max-width: 768px) {
+  .header,
+  .main-content,
+  .input-container {
+    max-width: none;
+    width: 100%;
+  }
+  
+  .header {
+    left: 0;
+    right: 0;
+    transform: none;
+  }
+  
+  .input-container {
+    left: 0;
+    right: 0;
+    transform: none;
+  }
+}
+
+/* ヘッダー（スクロール時も上部に貼り付く） */
+.header {
   background-color: var(--bg-secondary);
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px var(--shadow-color);
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  padding: 15px 20px;
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 1.5em;
+  color: var(--text-primary);
+}
+
+/* ヘッダー内の削除ボタンフォーム */
+.clear-form {
+  margin: 0;
+}
+
+/* ヘッダー内の削除ボタン */
+.clear-button-header {
+  background: none;
+  border: none;
+  font-size: 1.1em;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.clear-button-header:hover {
+  background-color: var(--border-color);
+}
+
+/* メインコンテンツエリア */
+.main-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0; /* flex子のoverflow計算用 */
+}
+
+/* チャットコンテナ */
+.chat-container {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}
+
+/* 入力コンテナ（下部に張り付く） */
+.input-container {
+  position: sticky;
+  bottom: 0;
+  background-color: var(--bg-secondary);
+  padding: 15px 20px 20px;
+  border-top: 1px solid var(--border-color);
+  z-index: 5;
+  box-sizing: border-box;
 }
 
 /* チャットボックスのスタイル */
 .chat-box {
-  border: 1px solid var(--border-color);
-  padding: 20px;
-  height: 400px;
+  padding: 80px 20px 160px; /* 上: ヘッダーの視覚的余白 / 下: 入力欄分の余白 */
+  flex: 1;
+  width: 100%;
   overflow-y: auto;
-  margin-bottom: 20px;
+  box-sizing: border-box;
   background-color: var(--bg-tertiary);
-  border-radius: 5px;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 /* ユーザーとボットのメッセージのスタイル */
@@ -135,16 +228,21 @@ body {
 
 /* 入力ボックスのスタイル */
 .input-box {
+  margin-bottom: 10px;
+}
+
+/* 入力ラッパー（相対配置でボタンを配置するため） */
+.input-wrapper {
+  position: relative;
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+  align-items: flex-end;
 }
 
 /* 入力エリア（textarea）のスタイル */
 .input-box textarea {
-  width: 85%;
-  padding: 10px;
-  border-radius: 5px;
+  flex: 1;
+  padding: 10px 50px 10px 10px; /* 右側にボタン分のパディングを追加 */
+  border-radius: 25px;
   border: 1px solid var(--border-light);
   background-color: var(--bg-secondary);
   color: var(--text-primary);
@@ -165,47 +263,33 @@ body {
 
 /* 送信ボタンのスタイル */
 .input-box button {
-  padding: 10px 15px;
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 8px;
   background-color: var(--button-primary);
   color: #fff;
   border: none;
-  border-radius: 5px;
+  border-radius: 50%;
   cursor: pointer;
-  white-space: nowrap;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  font-size: 14px;
 }
 
 /* 送信ボタンのホバー時のスタイル */
 .input-box button:hover:not(:disabled) {
   background-color: var(--button-primary-hover);
+  transform: translateY(-50%) scale(1.05);
 }
 
 /* 送信ボタンのdisabled時のスタイル */
 .input-box button:disabled {
-  background-color: var(--button-disabled);
-  cursor: not-allowed;
-  opacity: 0.6;
-}
-
-/* 履歴を消去するボタンのスタイル */
-.clear-button {
-  padding: 10px 15px;
-  background-color: var(--button-danger);
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 10px;
-  transition: background-color 0.3s ease;
-}
-
-/* 履歴を消去するボタンのホバー時のスタイル */
-.clear-button:hover:not(:disabled) {
-  background-color: var(--button-danger-hover);
-}
-
-/* 履歴を消去するボタンのdisabled時のスタイル */
-.clear-button:disabled {
   background-color: var(--button-disabled);
   cursor: not-allowed;
   opacity: 0.6;

@@ -6,15 +6,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chappy</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body>
-  <div class="container">
-    <header>
-      <h1>Chappy</h1>
-    </header>
+  <header class="header">
+    <h1>Chappy</h1>
+    <form method="POST" action="/clear" class="clear-form">
+      <button type="submit" class="clear-button-header" title="履歴を消去">
+        <i class="fas fa-trash"></i>
+      </button>
+    </form>
+  </header>
+  
+  <main class="main-content">
     {% block content %}{% endblock %}
-  </div>
+  </main>
 </body>
 
 </html>
