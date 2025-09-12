@@ -8,8 +8,10 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <!-- highlight.js (ライト/ダーク自動切替) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" media="(prefers-color-scheme: light)">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" media="(prefers-color-scheme: dark)">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+    media="(prefers-color-scheme: light)">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"
+    media="(prefers-color-scheme: dark)">
 </head>
 
 <body>
@@ -17,7 +19,7 @@
     <h1>Chappy</h1>
     <form method="POST" action="/clear" class="clear-form">
       {% if clear_disabled %}
-  <button type="submit" class="clear-button-header" title="履歴を削除" disabled>
+      <button type="submit" class="clear-button-header" title="履歴を削除" disabled>
         <i class="fas fa-trash"></i>
       </button>
       {% else %}
@@ -27,13 +29,17 @@
       {% endif %}
     </form>
   </header>
-  
+
   <main class="main-content">
     {% block content %}{% endblock %}
   </main>
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded',()=>{ if(window.hljs){ hljs.highlightAll(); }});
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.hljs) {
+        hljs.highlightAll();
+      }
+    });
   </script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -41,9 +47,9 @@
       if (clearForm) {
         clearForm.addEventListener('submit', (e) => {
           const ok = window.confirm('メッセージの履歴を削除しますか？');
-            if (!ok) {
-              e.preventDefault();
-            }
+          if (!ok) {
+            e.preventDefault();
+          }
         });
       }
     });

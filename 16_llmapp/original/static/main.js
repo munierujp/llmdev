@@ -41,7 +41,7 @@
       messageElement.textContent = message
       chatBoxElement.appendChild(messageElement)
       scrollToLatestMessage()
-  updateClearButtonState()
+      updateClearButtonState()
     }
 
     /** ボットメッセージをチャットボックスに追加 */
@@ -50,7 +50,7 @@
       messageElement.className = 'bot-message'
       messageElement.innerHTML = message
       chatBoxElement.appendChild(messageElement)
-  enhanceCodeBlocks(messageElement)
+      enhanceCodeBlocks(messageElement)
       // 追加後にコードブロックへシンタックスハイライト適用
       try {
         if (window.hljs) {
@@ -58,65 +58,67 @@
             window.hljs.highlightElement(block)
           })
         }
-      } catch (e) { console.warn('highlight failed', e) }
+      } catch (e) {
+        console.warn('highlight failed', e)
+      }
       scrollToLatestMessage()
-  updateClearButtonState()
+      updateClearButtonState()
     }
-    
-  scrollToLatestMessage()
-  updateClearButtonState()
-    
+
+    scrollToLatestMessage()
+    updateClearButtonState()
+
 
     /** 送信処理 */
     const handleSubmit = () => {
       const userMessage = userInputElement.value.trim()
       addUserMessage(userMessage)
-      
+
       // フォームを無効化
       userInputElement.value = ''
       userInputElement.disabled = true
       submitButtonElement.disabled = true
-      
+
       // メッセージを送信
       const formData = new FormData()
-      formData.append('user_message', userMessage)      
+      formData.append('user_message', userMessage)
       fetch('/send_message', {
-        method: 'POST',
-        body: formData
-      })
-      .then(response => {
-        if (response.ok) {
-          return response
-        } else {
-          throw new Error()
-        }
-      })
-      .then(response => response.text())
-      .then(html => {
-        // TODO: APIでJSONレスポンスを返すようにする
-        // HTMLレスポンスをパースしてボットの返答を抽出
-        const parser = new DOMParser()
-        const doc = parser.parseFromString(html, 'text/html')
-        const messages = Array.from(doc.querySelectorAll('.bot-message'))
-        
-        // 最後のボットメッセージ（新しい応答）を追加
-        if (messages.length > 0) {
-          const lastBotMessage = messages.at(-1)
-          addBotMessage(lastBotMessage.innerHTML)
-        }
-        
-        // フォームを有効化
-        userInputElement.disabled = false
-        submitButtonElement.disabled = false
-      })
-      .catch(error => {
-        console.error(error)
+          method: 'POST',
+          body: formData
+        })
+        .then(response => {
+          if (response.ok) {
+            return response
+          } else {
+            throw new Error()
+          }
+        })
+        .then(response => response.text())
+        .then(html => {
+          // TODO: APIでJSONレスポンスを返すようにする
+          // HTMLレスポンスをパースしてボットの返答を抽出
+          const parser = new DOMParser()
+          const doc = parser.parseFromString(html, 'text/html')
+          const messages = Array.from(doc.querySelectorAll('.bot-message'))
 
-        // エラー時はフォームを復元
-        userInputElement.value = userMessage
-        userInputElement.disabled = false
-        submitButtonElement.disabled = false
-      })
+          // 最後のボットメッセージ（新しい応答）を追加
+          if (messages.length > 0) {
+            const lastBotMessage = messages.at(-1)
+            addBotMessage(lastBotMessage.innerHTML)
+          }
+
+          // フォームを有効化
+          userInputElement.disabled = false
+          submitButtonElement.disabled = false
+        })
+        .catch(error => {
+          console.error(error)
+
+          // エラー時はフォームを復元
+          userInputElement.value = userMessage
+          userInputElement.disabled = false
+          submitButtonElement.disabled = false
+        })
     }
 
     // 送信ボタンで送信
@@ -133,11 +135,11 @@
       }
     })
 
-  // 入力変化でボタン状態を更新
-  userInputElement.addEventListener('input', updateSubmitButtonState)
+    // 入力変化でボタン状態を更新
+    userInputElement.addEventListener('input', updateSubmitButtonState)
 
-  // 既存メッセージ内コードブロックにもコピー機能付与
-  document.querySelectorAll('.bot-message').forEach(m => enhanceCodeBlocks(m))
+    // 既存メッセージ内コードブロックにもコピー機能付与
+    document.querySelectorAll('.bot-message').forEach(m => enhanceCodeBlocks(m))
   })
 })()
 
@@ -148,23 +150,29 @@ function enhanceCodeBlocks(scope) {
     if (pre.querySelector('.copy-button')) return
     const code = pre.querySelector('code')
     if (!code) return
-  const btn = document.createElement('button')
-  btn.type = 'button'
-  btn.className = 'copy-button'
-  btn.innerHTML = '<i class="fas fa-copy"></i>'
+    const btn = document.createElement('button')
+    btn.type = 'button'
+    btn.className = 'copy-button'
+    btn.innerHTML = '<i class="fas fa-copy"></i>'
     btn.addEventListener('click', async () => {
       try {
         await navigator.clipboard.writeText(code.innerText)
-  btn.classList.remove('error')
-  btn.classList.add('copied')
-  btn.innerHTML = '<i class="fas fa-check"></i>'
-  setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = '<i class="fas fa-copy"></i>' }, 1400)
+        btn.classList.remove('error')
+        btn.classList.add('copied')
+        btn.innerHTML = '<i class="fas fa-check"></i>'
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.innerHTML = '<i class="fas fa-copy"></i>'
+        }, 1400)
       } catch (e) {
         console.warn('copy failed', e)
-  btn.classList.remove('copied')
-  btn.classList.add('error')
-  btn.innerHTML = '<i class="fas fa-exclamation"></i>'
-  setTimeout(() => { btn.classList.remove('error'); btn.innerHTML = '<i class="fas fa-copy"></i>' }, 1200)
+        btn.classList.remove('copied')
+        btn.classList.add('error')
+        btn.innerHTML = '<i class="fas fa-exclamation"></i>'
+        setTimeout(() => {
+          btn.classList.remove('error');
+          btn.innerHTML = '<i class="fas fa-copy"></i>'
+        }, 1200)
       }
     })
     pre.appendChild(btn)

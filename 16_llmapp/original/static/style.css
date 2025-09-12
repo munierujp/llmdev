@@ -69,19 +69,20 @@ body {
 
 /* スマートフォンサイズでは幅制限を解除 */
 @media (max-width: 768px) {
+
   .header,
   .main-content,
   .input-container {
     max-width: none;
     width: 100%;
   }
-  
+
   .header {
     left: 0;
     right: 0;
     transform: none;
   }
-  
+
   .input-container {
     left: 0;
     right: 0;
@@ -133,11 +134,13 @@ body {
 .clear-button-header:hover {
   background-color: var(--border-color);
 }
+
 .clear-button-header:disabled {
   opacity: 0.4;
   cursor: not-allowed;
   background-color: transparent;
 }
+
 .clear-button-header:disabled:hover {
   background-color: transparent;
 }
@@ -147,7 +150,8 @@ body {
   display: flex;
   flex-direction: column;
   flex: 1;
-  min-height: 0; /* flex子のoverflow計算用 */
+  min-height: 0;
+  /* flex子のoverflow計算用 */
 }
 
 /* チャットコンテナ */
@@ -170,7 +174,8 @@ body {
 
 /* チャットボックスのスタイル */
 .chat-box {
-  padding: 80px 20px 160px; /* 上: ヘッダーの視覚的余白 / 下: 入力欄分の余白 */
+  padding: 80px 20px 160px;
+  /* 上: ヘッダーの視覚的余白 / 下: 入力欄分の余白 */
   flex: 1;
   width: 100%;
   overflow-y: auto;
@@ -207,14 +212,41 @@ body {
 }
 
 /* Markdown 表示調整 */
-.bot-message h1,.bot-message h2,.bot-message h3 { margin: 0.6em 0 0.4em; }
-.bot-message p { margin: 0.4em 0; }
-.bot-message pre { background: var(--bg-secondary); padding:10px; border-radius:6px; overflow:auto; }
-.bot-message code { background: rgba(0,0,0,0.08); padding:2px 4px; border-radius:4px; font-family: Menlo, monospace; font-size: 0.9em; }
-.bot-message pre code { background: transparent; padding:0; }
+.bot-message h1,
+.bot-message h2,
+.bot-message h3 {
+  margin: 0.6em 0 0.4em;
+}
+
+.bot-message p {
+  margin: 0.4em 0;
+}
+
+.bot-message pre {
+  background: var(--bg-secondary);
+  padding: 10px;
+  border-radius: 6px;
+  overflow: auto;
+}
+
+.bot-message code {
+  background: rgba(0, 0, 0, 0.08);
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-family: Menlo, monospace;
+  font-size: 0.9em;
+}
+
+.bot-message pre code {
+  background: transparent;
+  padding: 0;
+}
 
 /* コードブロック用コピー ボタン */
-.bot-message pre { position: relative; }
+.bot-message pre {
+  position: relative;
+}
+
 .copy-button {
   position: absolute;
   top: 6px;
@@ -233,19 +265,71 @@ body {
   justify-content: center;
   transition: background-color .2s, opacity .2s, transform .15s;
 }
-.copy-button i { font-size: 14px; pointer-events: none; }
-.copy-button:hover { opacity: 1; background: var(--button-primary-hover); }
-.copy-button:active { transform: scale(.92); }
-.copy-button.copied { background: #28a745; }
-.copy-button.copied:hover { background: #218838; }
-.copy-button.error { background: #dc3545; }
-.copy-button.error:hover { background: #c82333; }
-.bot-message ul, .bot-message ol { padding-left: 1.4em; margin:0.4em 0; }
-.bot-message table { border-collapse: collapse; width: 100%; margin:0.6em 0; }
-.bot-message th, .bot-message td { border:1px solid var(--border-color); padding:4px 8px; text-align:left; }
-.bot-message blockquote { margin:0.6em 0; padding:0.4em 0.8em; border-left:4px solid var(--border-color); background: rgba(0,0,0,0.05); }
-.bot-message a { color: var(--button-primary); text-decoration: underline; }
-.bot-message a:hover { color: var(--button-primary-hover); }
+
+.copy-button i {
+  font-size: 14px;
+  pointer-events: none;
+}
+
+.copy-button:hover {
+  opacity: 1;
+  background: var(--button-primary-hover);
+}
+
+.copy-button:active {
+  transform: scale(.92);
+}
+
+.copy-button.copied {
+  background: #28a745;
+}
+
+.copy-button.copied:hover {
+  background: #218838;
+}
+
+.copy-button.error {
+  background: #dc3545;
+}
+
+.copy-button.error:hover {
+  background: #c82333;
+}
+
+.bot-message ul,
+.bot-message ol {
+  padding-left: 1.4em;
+  margin: 0.4em 0;
+}
+
+.bot-message table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 0.6em 0;
+}
+
+.bot-message th,
+.bot-message td {
+  border: 1px solid var(--border-color);
+  padding: 4px 8px;
+  text-align: left;
+}
+
+.bot-message blockquote {
+  margin: 0.6em 0;
+  padding: 0.4em 0.8em;
+  border-left: 4px solid var(--border-color);
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.bot-message a {
+  color: var(--button-primary);
+  text-decoration: underline;
+}
+
+.bot-message a:hover {
+  color: var(--button-primary-hover);
+}
 
 /* 吹き出しの三角形を作成するスタイル */
 .user-message:after,
@@ -291,14 +375,17 @@ body {
 .input-box textarea {
   flex: 1;
   box-sizing: border-box;
-  padding: 12px 56px 12px 16px; /* 上下同値で1行時中央に見える */
+  padding: 12px 56px 12px 16px;
+  /* 上下同値で1行時中央に見える */
   border-radius: 16px;
   border: 1px solid var(--border-light);
   background-color: var(--bg-secondary);
   color: var(--text-primary);
   font-size: 16px;
-  line-height: 1.4; /* 実質22.4px想定 */
-  min-height: calc(1.4em + 24px); /* 行高 + 上下padding */
+  line-height: 1.4;
+  /* 実質22.4px想定 */
+  min-height: calc(1.4em + 24px);
+  /* 行高 + 上下padding */
   max-height: calc(1.4em * 5 + 24px);
   overflow-y: auto;
   transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
@@ -318,7 +405,8 @@ body {
 .input-box button {
   position: absolute;
   right: 8px;
-  bottom: 6px; /* 下部固定 */
+  bottom: 6px;
+  /* 下部固定 */
   padding: 8px;
   background-color: var(--button-primary);
   color: #fff;
