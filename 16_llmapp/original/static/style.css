@@ -13,6 +13,10 @@
   --button-primary-hover: #0056b3;
   --button-danger: #dc3545;
   --button-danger-hover: #c82333;
+  --button-disabled: #6c757d;
+  --input-disabled-bg: #f8f9fa;
+  --input-disabled-text: #6c757d;
+  --input-disabled-border: #dee2e6;
   --shadow-color: rgba(0, 0, 0, 0.1);
 }
 
@@ -32,6 +36,10 @@
     --button-primary-hover: #004499;
     --button-danger: #cc2936;
     --button-danger-hover: #991f29;
+    --button-disabled: #495057;
+    --input-disabled-bg: #495057;
+    --input-disabled-text: #adb5bd;
+    --input-disabled-border: #6c757d;
     --shadow-color: rgba(0, 0, 0, 0.3);
   }
 }
@@ -146,6 +154,15 @@ body {
   transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
 
+/* 入力エリア（textarea）のdisabled時のスタイル */
+.input-box textarea:disabled {
+  background-color: var(--input-disabled-bg);
+  color: var(--input-disabled-text);
+  border-color: var(--input-disabled-border);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
 /* 送信ボタンのスタイル */
 .input-box button {
   padding: 10px 15px;
@@ -159,8 +176,15 @@ body {
 }
 
 /* 送信ボタンのホバー時のスタイル */
-.input-box button:hover {
+.input-box button:hover:not(:disabled) {
   background-color: var(--button-primary-hover);
+}
+
+/* 送信ボタンのdisabled時のスタイル */
+.input-box button:disabled {
+  background-color: var(--button-disabled);
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 
 /* 履歴を消去するボタンのスタイル */
@@ -176,6 +200,13 @@ body {
 }
 
 /* 履歴を消去するボタンのホバー時のスタイル */
-.clear-button:hover {
+.clear-button:hover:not(:disabled) {
   background-color: var(--button-danger-hover);
+}
+
+/* 履歴を消去するボタンのdisabled時のスタイル */
+.clear-button:disabled {
+  background-color: var(--button-disabled);
+  cursor: not-allowed;
+  opacity: 0.6;
 }
