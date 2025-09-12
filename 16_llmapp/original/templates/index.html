@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="chat-container">
+  <div class="chat-box" id="chat-box">
+    <div id="welcome-message" class="welcome-message bot-message">
+      私はChappyです。この世界の一般的な知識はもちろん、みらいテクノロジー株式会社についても知っています。私自身が知らないことでも、インターネットで検索して答えることができます。なんでもきいてくださいね！たとえば……
+      <ul>
+        <li>日本の首都は？</li>
+        <li>有給休暇の日数は？</li>
+        <li>週末の東京駅周辺のイベントを検索して</li>
+        <li>JavaScriptでFizzBuzzのコードを書いて</li>
+      </ul>
+    </div>
+    {% for message in messages %}
+    <div class="{{ message.class }}">
+      {{ message.text|safe }}
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="input-container">
+  <form method="POST" action="/send_message" id="chat-form">
+    <div class="input-box">
+      <div class="input-wrapper">
+  <textarea name="user_message" id="user-input" placeholder="メッセージを入力" aria-label="メッセージ入力" required></textarea>
+        <button type="submit" id="submit-button" aria-label="送信">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<script defer src="{{ url_for('static', filename='main.js') }}"></script>
+{% endblock %}

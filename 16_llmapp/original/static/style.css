@@ -1,0 +1,555 @@
+:root {
+  /* ライトモードのカラー変数 */
+  --bg-primary: #f4f4f9;
+  --bg-secondary: #fff;
+  --bg-tertiary: #fafafa;
+  --text-primary: #000;
+  --text-secondary: #333;
+  --border-color: #ddd;
+  --border-light: #ccc;
+  --user-message-bg: #cce5ff;
+  --bot-message-bg: #e2e3e5;
+  --button-primary: #007bff;
+  --button-primary-hover: #0056b3;
+  --button-danger: #dc3545;
+  --button-danger-hover: #c82333;
+  --button-disabled: #6c757d;
+  --input-disabled-bg: #f8f9fa;
+  --input-disabled-text: #6c757d;
+  --input-disabled-border: #dee2e6;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+/* ダークモードのカラー変数 */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-primary: #1a1a1a;
+    --bg-secondary: #2d2d2d;
+    --bg-tertiary: #333333;
+    --text-primary: #ffffff;
+    --text-secondary: #e0e0e0;
+    --border-color: #555555;
+    --border-light: #666666;
+    --user-message-bg: #1e4a72;
+    --bot-message-bg: #404040;
+    --button-primary: #0066cc;
+    --button-primary-hover: #004499;
+    --button-danger: #cc2936;
+    --button-danger-hover: #991f29;
+    --button-disabled: #495057;
+    --input-disabled-bg: #495057;
+    --input-disabled-text: #adb5bd;
+    --input-disabled-border: #6c757d;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* 全体の背景とフォント設定 */
+body {
+  font-family: Arial, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 全体のコンテンツ幅制限 */
+.header,
+.main-content,
+.input-container {
+  max-width: 768px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+/* スマートフォンサイズでは幅制限を解除 */
+@media (max-width: 768px) {
+
+  .header,
+  .main-content,
+  .input-container {
+    max-width: none;
+    width: 100%;
+  }
+
+  .header {
+    left: 0;
+    right: 0;
+    transform: none;
+  }
+
+  .input-container {
+    left: 0;
+    right: 0;
+    transform: none;
+  }
+}
+
+/* ヘッダー（スクロール時も上部に貼り付く） */
+.header {
+  background-color: var(--bg-secondary);
+  padding: 15px 20px;
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 1.5em;
+  color: var(--text-primary);
+}
+
+/* ヘッダー内の削除ボタンフォーム */
+.clear-form {
+  margin: 0;
+}
+
+/* ヘッダー内の削除ボタン */
+.clear-button-header {
+  background: none;
+  border: none;
+  font-size: 1.1em;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.clear-button-header:hover {
+  background-color: var(--border-color);
+}
+
+.clear-button-header:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background-color: transparent;
+}
+
+.clear-button-header:disabled:hover {
+  background-color: transparent;
+}
+
+/* メインコンテンツエリア */
+.main-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  /* flex子のoverflow計算用 */
+}
+
+/* チャットコンテナ */
+.chat-container {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}
+
+/* 入力コンテナ（下部に張り付く） */
+.input-container {
+  position: sticky;
+  bottom: 0;
+  background-color: var(--bg-secondary);
+  padding: 15px 20px 20px;
+  border-top: 1px solid var(--border-color);
+  z-index: 5;
+  box-sizing: border-box;
+}
+
+/* チャットボックスのスタイル */
+.chat-box {
+  padding: 80px 20px 160px;
+  /* 上: ヘッダーの視覚的余白 / 下: 入力欄分の余白 */
+  flex: 1;
+  width: 100%;
+  overflow-y: auto;
+  box-sizing: border-box;
+  background-color: var(--bg-tertiary);
+}
+
+/* ユーザーとボットのメッセージのスタイル */
+.user-message,
+.bot-message {
+  position: relative;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  max-width: 90%;
+  word-wrap: break-word;
+  width: fit-content;
+  transition: background-color 0.3s ease;
+}
+
+/* ユーザーのメッセージスタイル */
+.user-message {
+  background-color: var(--user-message-bg);
+  color: var(--text-primary);
+  text-align: right;
+  margin-left: auto;
+}
+
+/* ボットのメッセージスタイル */
+.bot-message {
+  background-color: var(--bot-message-bg);
+  color: var(--text-primary);
+  text-align: left;
+}
+
+/* Markdown 表示調整 */
+.bot-message h1,
+.bot-message h2,
+.bot-message h3 {
+  margin: 0.6em 0 0.4em;
+}
+
+.bot-message p {
+  margin: 0.4em 0;
+}
+
+/* ユーザーメッセージ内の<p>余白調整（単段落でも余白が広がりすぎないように） */
+.user-message p {
+  margin: 0.35em 0; /* やや控えめ */
+}
+.user-message p:first-child { margin-top: 0; }
+.user-message p:last-child { margin-bottom: 0; }
+
+.bot-message pre {
+  background: var(--bg-secondary);
+  padding: 10px;
+  border-radius: 6px;
+  overflow: auto;
+}
+
+/* 言語バッジ付きの場合は上部余白を拡張 */
+.bot-message pre.has-lang-badge {
+  padding-top: 36px;
+}
+
+.code-lang-badge {
+  position: absolute;
+  top: 6px;
+  left: 10px;
+  background: var(--button-primary);
+  color: #fff;
+  font-size: 11px;
+  line-height: 1;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-family: system-ui, Arial, sans-serif;
+  letter-spacing: .5px;
+  text-transform: none;
+  pointer-events: none;
+  opacity: 0.9;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.15), 0 1px 2px var(--shadow-color);
+}
+
+@media (prefers-color-scheme: dark) {
+  .code-lang-badge { opacity: 0.85; }
+}
+
+.bot-message code {
+  background: rgba(0, 0, 0, 0.08);
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-family: Menlo, monospace;
+  font-size: 0.9em;
+}
+
+.bot-message pre code {
+  background: transparent;
+  padding: 0;
+}
+
+/* コードブロック用コピー ボタン */
+.bot-message pre {
+  position: relative;
+}
+
+.copy-button {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: var(--button-primary);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  cursor: pointer;
+  opacity: 0.85;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color .2s, opacity .2s, transform .15s;
+}
+
+.copy-button i {
+  font-size: 14px;
+  pointer-events: none;
+}
+
+.copy-button:hover {
+  opacity: 1;
+  background: var(--button-primary-hover);
+}
+
+.copy-button:active {
+  transform: scale(.92);
+}
+
+.copy-button.copied {
+  background: #28a745;
+}
+
+.copy-button.copied:hover {
+  background: #218838;
+}
+
+.copy-button.error {
+  background: #dc3545;
+}
+
+.copy-button.error:hover {
+  background: #c82333;
+}
+
+/* ユーザーメッセージ用コピー ボタン */
+/* ユーザーメッセージ下部ツールバー */
+.message-tools {
+  display: flex;
+  gap: 8px;
+  margin: 4px 0 10px;
+}
+.user-message-tools { justify-content: flex-end; }
+.user-message + .user-message-tools { margin-top: 4px; }
+
+.copy-msg-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px;
+  font-size: 12px;
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: 14px;
+  cursor: pointer;
+  line-height: 1;
+  transition: background-color .2s, color .2s, border-color .2s, transform .15s;
+}
+.copy-msg-button i { font-size: 12px; pointer-events: none; }
+.copy-msg-button:hover { background: var(--button-primary); color: #fff; border-color: var(--button-primary); }
+.copy-msg-button:active { transform: scale(.9); }
+.copy-msg-button.copied { background: #28a745; color: #fff; border-color: #28a745; }
+.copy-msg-button.error { background: #dc3545; color: #fff; border-color: #dc3545; }
+@media (prefers-color-scheme: dark) {
+  .copy-msg-button { background: var(--bg-tertiary); }
+  .copy-msg-button:hover { background: var(--button-primary); }
+}
+
+/* タイピングインジケータ */
+.typing-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 4px;
+  position: relative;
+  height: 24px;
+  margin: 4px 0 10px;
+  /* 透過で吹き出し感をなくす */
+  background: transparent;
+}
+
+.typing-indicator .dots {
+  display: inline-flex;
+  gap: 4px;
+}
+
+.typing-indicator .dot {
+  width: 6px;
+  height: 6px;
+  background: var(--button-primary);
+  border-radius: 50%;
+  opacity: 0.3;
+  animation: typingBlink 1.2s infinite ease-in-out;
+}
+
+.typing-indicator .dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-indicator .dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typingBlink {
+  0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(-2px); }
+}
+
+/* スクリーンリーダー専用テキスト */
+.sr-only {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0);
+  white-space: nowrap; border: 0;
+}
+
+.bot-message ul,
+.bot-message ol {
+  padding-left: 1.4em;
+  margin: 0.4em 0;
+}
+
+.bot-message table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 0.6em 0;
+}
+
+.bot-message th,
+.bot-message td {
+  border: 1px solid var(--border-color);
+  padding: 4px 8px;
+  text-align: left;
+}
+
+.bot-message blockquote {
+  margin: 0.6em 0;
+  padding: 0.4em 0.8em;
+  border-left: 4px solid var(--border-color);
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.bot-message a {
+  color: var(--button-primary);
+  text-decoration: underline;
+}
+
+.bot-message a:hover {
+  color: var(--button-primary-hover);
+}
+
+/* 吹き出しの三角形を作成するスタイル */
+.user-message:after,
+.bot-message:after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid;
+}
+
+/* ユーザーのメッセージの吹き出し三角形 */
+.user-message:after {
+  right: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-top-color: var(--user-message-bg);
+}
+
+/* ボットのメッセージの吹き出し三角形 */
+.bot-message:after {
+  left: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-top-color: var(--bot-message-bg);
+}
+
+/* 入力ボックスのスタイル */
+.input-box {
+  margin-bottom: 10px;
+}
+
+/* 入力ラッパー（相対配置でボタンを配置するため） */
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+}
+
+/* 入力エリア（textarea）のスタイル */
+.input-box textarea {
+  flex: 1;
+  box-sizing: border-box;
+  padding: 12px 56px 12px 16px;
+  /* 上下同値で1行時中央に見える */
+  border-radius: 16px;
+  border: 1px solid var(--border-light);
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  font-size: 16px;
+  line-height: 1.4;
+  /* 実質22.4px想定 */
+  min-height: calc(1.4em + 24px);
+  /* 行高 + 上下padding */
+  max-height: calc(1.4em * 5 + 24px);
+  overflow-y: auto;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+  field-sizing: content;
+}
+
+/* フォーカス時の強調（青系） */
+.input-box textarea:focus {
+  border-color: var(--button-primary);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+/* 入力エリア（textarea）のdisabled時のスタイル */
+.input-box textarea:disabled {
+  background-color: var(--input-disabled-bg);
+  color: var(--input-disabled-text);
+  border-color: var(--input-disabled-border);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* 送信ボタンのスタイル */
+.input-box button {
+  position: absolute;
+  right: 8px;
+  bottom: 6px;
+  /* 下部固定 */
+  padding: 8px;
+  background-color: var(--button-primary);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  font-size: 14px;
+}
+
+/* 送信ボタンのホバー時のスタイル */
+.input-box button:hover:not(:disabled) {
+  background-color: var(--button-primary-hover);
+  transform: scale(1.05);
+}
+
+/* 送信ボタンのdisabled時のスタイル */
+.input-box button:disabled {
+  background-color: var(--button-disabled);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
