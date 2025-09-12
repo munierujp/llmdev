@@ -198,6 +198,13 @@ def get_messages_list(memory, thread_id):
             extensions=['fenced_code', 'tables', 'toc', 'sane_lists']
         )
         clean = bleach.clean(html, tags=allowed_tags, attributes=allowed_attrs, strip=True)
+        import re
+        def add_target(m):
+            tag = m.group(0)
+            if 'target=' in tag:
+                return tag
+            return tag[:-1] + ' target="_blank" rel="noopener noreferrer">'
+        clean = re.sub(r'<a\b([^>]*?href="https?://[^"]+"[^>]*)>', add_target, clean)
         return clean
 
     for message in memories:
