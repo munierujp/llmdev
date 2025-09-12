@@ -52,6 +52,28 @@
       updateClearButtonState()
     }
 
+    /** タイピングインジケータ表示 */
+    const showTypingIndicator = () => {
+      // 既存があれば一度除去
+      hideTypingIndicator()
+      const el = document.createElement('div')
+  // 吹き出しスタイルを避けるため 'bot-message' を付与しない
+  el.className = 'typing-indicator'
+      el.id = 'typing-indicator'
+  el.innerHTML = '<span class="sr-only">Chappyが考え中</span><span class="dots" aria-hidden="true"><span class="dot"></span><span class="dot"></span><span class="dot"></span></span>'
+      chatBoxElement.appendChild(el)
+      scrollToLatestMessage()
+      return el
+    }
+
+    /** タイピングインジケータ除去 */
+    const hideTypingIndicator = () => {
+      const el = document.getElementById('typing-indicator')
+      if (el && el.parentNode) {
+        el.parentNode.removeChild(el)
+      }
+    }
+
     /** ボットメッセージをチャットボックスに追加 */
     const addBotMessage = (message) => {
       const messageElement = document.createElement('div')
@@ -81,6 +103,7 @@
     const handleSubmit = () => {
       const userMessage = userInputElement.value.trim()
       addUserMessage(userMessage)
+  const typingEl = showTypingIndicator()
 
       // フォームを無効化
       userInputElement.value = ''
@@ -112,6 +135,7 @@
           // 最後のボットメッセージ（新しい応答）を追加
           if (messages.length > 0) {
             const lastBotMessage = messages.at(-1)
+            hideTypingIndicator()
             addBotMessage(lastBotMessage.innerHTML)
           }
 
@@ -123,6 +147,7 @@
         })
         .catch(error => {
           console.error(error)
+          hideTypingIndicator()
 
           // エラー時はフォームを復元
           userInputElement.value = userMessage
