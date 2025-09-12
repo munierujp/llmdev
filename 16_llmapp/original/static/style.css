@@ -224,10 +224,17 @@ body {
 
 /* ユーザーメッセージ内の<p>余白調整（単段落でも余白が広がりすぎないように） */
 .user-message p {
-  margin: 0.35em 0; /* やや控えめ */
+  margin: 0.35em 0;
+  /* やや控えめ */
 }
-.user-message p:first-child { margin-top: 0; }
-.user-message p:last-child { margin-bottom: 0; }
+
+.user-message p:first-child {
+  margin-top: 0;
+}
+
+.user-message p:last-child {
+  margin-bottom: 0;
+}
 
 .bot-message pre {
   background: var(--bg-secondary);
@@ -256,11 +263,13 @@ body {
   text-transform: none;
   pointer-events: none;
   opacity: 0.9;
-  box-shadow: 0 0 0 1px rgba(255,255,255,0.15), 0 1px 2px var(--shadow-color);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.15), 0 1px 2px var(--shadow-color);
 }
 
 @media (prefers-color-scheme: dark) {
-  .code-lang-badge { opacity: 0.85; }
+  .code-lang-badge {
+    opacity: 0.85;
+  }
 }
 
 .bot-message code {
@@ -337,8 +346,14 @@ body {
   gap: 8px;
   margin: 4px 0 10px;
 }
-.user-message-tools { justify-content: flex-end; }
-.user-message + .user-message-tools { margin-top: 4px; }
+
+.user-message-tools {
+  justify-content: flex-end;
+}
+
+.user-message+.user-message-tools {
+  margin-top: 4px;
+}
 
 .copy-msg-button {
   display: inline-flex;
@@ -354,14 +369,42 @@ body {
   line-height: 1;
   transition: background-color .2s, color .2s, border-color .2s, transform .15s;
 }
-.copy-msg-button i { font-size: 12px; pointer-events: none; }
-.copy-msg-button:hover { background: var(--button-primary); color: #fff; border-color: var(--button-primary); }
-.copy-msg-button:active { transform: scale(.9); }
-.copy-msg-button.copied { background: #28a745; color: #fff; border-color: #28a745; }
-.copy-msg-button.error { background: #dc3545; color: #fff; border-color: #dc3545; }
+
+.copy-msg-button i {
+  font-size: 12px;
+  pointer-events: none;
+}
+
+.copy-msg-button:hover {
+  background: var(--button-primary);
+  color: #fff;
+  border-color: var(--button-primary);
+}
+
+.copy-msg-button:active {
+  transform: scale(.9);
+}
+
+.copy-msg-button.copied {
+  background: #28a745;
+  color: #fff;
+  border-color: #28a745;
+}
+
+.copy-msg-button.error {
+  background: #dc3545;
+  color: #fff;
+  border-color: #dc3545;
+}
+
 @media (prefers-color-scheme: dark) {
-  .copy-msg-button { background: var(--bg-tertiary); }
-  .copy-msg-button:hover { background: var(--button-primary); }
+  .copy-msg-button {
+    background: var(--bg-tertiary);
+  }
+
+  .copy-msg-button:hover {
+    background: var(--button-primary);
+  }
 }
 
 /* タイピングインジケータ */
@@ -391,21 +434,40 @@ body {
   animation: typingBlink 1.2s infinite ease-in-out;
 }
 
-.typing-indicator .dot:nth-child(2) { animation-delay: 0.2s; }
-.typing-indicator .dot:nth-child(3) { animation-delay: 0.4s; }
+.typing-indicator .dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing-indicator .dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
 
 @keyframes typingBlink {
-  0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
-  30% { opacity: 1; transform: translateY(-2px); }
+
+  0%,
+  60%,
+  100% {
+    opacity: 0.3;
+    transform: translateY(0);
+  }
+
+  30% {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
 }
 
 /* スクリーンリーダー専用テキスト */
 .sr-only {
   position: absolute !important;
-  width: 1px; height: 1px;
-  padding: 0; margin: -1px;
-  overflow: hidden; clip: rect(0 0 0 0);
-  white-space: nowrap; border: 0;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .bot-message ul,

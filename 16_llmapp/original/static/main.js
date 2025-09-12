@@ -11,7 +11,10 @@
     if (userInputElement && !userInputElement.disabled) {
       // レイアウト安定後に確実にフォーカスさせる
       setTimeout(() => {
-        try { userInputElement.focus() } catch (_) { /* noop */ }
+        try {
+          userInputElement.focus()
+        } catch (_) {
+          /* noop */ }
       }, 0)
     }
 
@@ -97,10 +100,10 @@
       // 既存があれば一度除去
       hideTypingIndicator()
       const el = document.createElement('div')
-  // 吹き出しスタイルを避けるため 'bot-message' を付与しない
-  el.className = 'typing-indicator'
+      // 吹き出しスタイルを避けるため 'bot-message' を付与しない
+      el.className = 'typing-indicator'
       el.id = 'typing-indicator'
-  el.innerHTML = '<span class="sr-only">Chappyが考え中</span><span class="dots" aria-hidden="true"><span class="dot"></span><span class="dot"></span><span class="dot"></span></span>'
+      el.innerHTML = '<span class="sr-only">Chappyが考え中</span><span class="dots" aria-hidden="true"><span class="dot"></span><span class="dot"></span><span class="dot"></span></span>'
       chatBoxElement.appendChild(el)
       scrollToLatestMessage()
       return el
@@ -143,7 +146,7 @@
     const handleSubmit = () => {
       const userMessage = userInputElement.value.trim()
       addUserMessage(userMessage)
-  const typingEl = showTypingIndicator()
+      const typingEl = showTypingIndicator()
 
       // フォームを無効化
       userInputElement.value = ''
@@ -183,7 +186,9 @@
           userInputElement.disabled = false
           submitButtonElement.disabled = false
           // 再度入力しやすいようにフォーカスを戻す
-          try { userInputElement.focus() } catch (_) {}
+          try {
+            userInputElement.focus()
+          } catch (_) {}
         })
         .catch(error => {
           console.error(error)
@@ -193,7 +198,9 @@
           userInputElement.value = userMessage
           userInputElement.disabled = false
           submitButtonElement.disabled = false
-          try { userInputElement.focus() } catch (_) {}
+          try {
+            userInputElement.focus()
+          } catch (_) {}
         })
     }
 
@@ -216,8 +223,8 @@
 
     // 既存メッセージ内コードブロックにもコピー機能付与
     document.querySelectorAll('.bot-message').forEach(m => enhanceCodeBlocks(m))
-  // 既存ユーザーメッセージにコピー追加
-  document.querySelectorAll('.user-message').forEach(m => addCopyButtonToMessage(m))
+    // 既存ユーザーメッセージにコピー追加
+    document.querySelectorAll('.user-message').forEach(m => addCopyButtonToMessage(m))
   })
 })()
 
@@ -234,14 +241,39 @@ function enhanceCodeBlocks(scope) {
         const classes = code.className.split(/\s+/)
         const langClass = classes.find(c => c.startsWith('language-'))
         if (langClass) {
-          const raw = langClass.replace('language-','').toLowerCase()
+          const raw = langClass.replace('language-', '').toLowerCase()
           const langMap = {
-            js: 'JavaScript', javascript: 'JavaScript', jsx: 'JSX', ts: 'TypeScript', typescript: 'TypeScript',
-            py: 'Python', python: 'Python', rb: 'Ruby', java: 'Java', c: 'C', cpp: 'C++', cs: 'C#', go: 'Go', rs: 'Rust',
-            php: 'PHP', swift: 'Swift', kotlin: 'Kotlin', scala: 'Scala', sh: 'Shell', bash: 'Bash', zsh: 'Zsh',
-            html: 'HTML', css: 'CSS', json: 'JSON', yaml: 'YAML', yml: 'YAML', sql: 'SQL', md: 'Markdown', markdown: 'Markdown'
+            js: 'JavaScript',
+            javascript: 'JavaScript',
+            jsx: 'JSX',
+            ts: 'TypeScript',
+            typescript: 'TypeScript',
+            py: 'Python',
+            python: 'Python',
+            rb: 'Ruby',
+            java: 'Java',
+            c: 'C',
+            cpp: 'C++',
+            cs: 'C#',
+            go: 'Go',
+            rs: 'Rust',
+            php: 'PHP',
+            swift: 'Swift',
+            kotlin: 'Kotlin',
+            scala: 'Scala',
+            sh: 'Shell',
+            bash: 'Bash',
+            zsh: 'Zsh',
+            html: 'HTML',
+            css: 'CSS',
+            json: 'JSON',
+            yaml: 'YAML',
+            yml: 'YAML',
+            sql: 'SQL',
+            md: 'Markdown',
+            markdown: 'Markdown'
           }
-            
+
           const label = langMap[raw] || raw.charAt(0).toUpperCase() + raw.slice(1)
           const badge = document.createElement('span')
           badge.className = 'code-lang-badge'
@@ -250,7 +282,8 @@ function enhanceCodeBlocks(scope) {
           pre.appendChild(badge)
         }
       }
-    } catch (_) { /* noop */ }
+    } catch (_) {
+      /* noop */ }
     const btn = document.createElement('button')
     btn.type = 'button'
     btn.className = 'copy-button'
