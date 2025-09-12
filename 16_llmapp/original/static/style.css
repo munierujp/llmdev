@@ -222,6 +222,13 @@ body {
   margin: 0.4em 0;
 }
 
+/* ユーザーメッセージ内の<p>余白調整（単段落でも余白が広がりすぎないように） */
+.user-message p {
+  margin: 0.35em 0; /* やや控えめ */
+}
+.user-message p:first-child { margin-top: 0; }
+.user-message p:last-child { margin-bottom: 0; }
+
 .bot-message pre {
   background: var(--bg-secondary);
   padding: 10px;
