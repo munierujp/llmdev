@@ -6,6 +6,17 @@
     const userInputElement = document.getElementById('user-input')
     const submitButtonElement = document.getElementById('submit-button')
 
+    // 入力内容に応じて送信ボタンの活性/非活性を切り替え
+    const updateSubmitButtonState = () => {
+      const hasText = userInputElement.value.trim().length > 0
+      if (!userInputElement.disabled) {
+        submitButtonElement.disabled = !hasText
+      }
+    }
+
+    // 初期状態更新
+    updateSubmitButtonState()
+
     /** 最新のメッセージにスクロール */
     const scrollToLatestMessage = () => {
       chatBoxElement.scrollTop = chatBoxElement.scrollHeight
@@ -97,5 +108,8 @@
         handleSubmit()
       }
     })
+
+  // 入力変化でボタン状態を更新
+  userInputElement.addEventListener('input', updateSubmitButtonState)
   })
 })()
