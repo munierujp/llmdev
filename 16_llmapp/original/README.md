@@ -1,5 +1,12 @@
 # Chappy
 
+<div align="center">
+  <img
+    src="./docs/screenshot.png"
+    width="300"
+  >
+</div>
+
 ## こだわりポイント
 
 - レスポンシブデザイン
